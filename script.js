@@ -7,7 +7,6 @@ const menuScreen = document.getElementById('menu-screen');
 const howToPlayScreen = document.getElementById('how-to-play-screen');
 const gameScreen = document.getElementById('game-screen');
 const joinGameBtn = document.getElementById('join-game');
-const createGameBtn = document.getElementById('create-game');
 const howToPlayBtn = document.getElementById('how-to-play');
 const backToMenuBtn = document.getElementById('back-to-menu');
 const playerNameInput = document.getElementById('player-name-input');
@@ -27,8 +26,8 @@ let lastTime = 0;
 // حالة التطبيق
 let appState = {
     playerName: 'اللاعب',
-    roomId: null,
-    isMultiplayer: false
+    isConnected: false,
+    session: null
 };
 
 // أحداث واجهة المستخدم
@@ -37,15 +36,7 @@ joinGameBtn.addEventListener('click', () => {
         appState.playerName = playerNameInput.value.trim();
     }
     playerNameDisplay.textContent = appState.playerName;
-    startGame(false);
-});
-
-createGameBtn.addEventListener('click', () => {
-    if (playerNameInput.value.trim()) {
-        appState.playerName = playerNameInput.value.trim();
-    }
-    playerNameDisplay.textContent = appState.playerName;
-    startGame(true);
+    startGame();
 });
 
 howToPlayBtn.addEventListener('click', () => {
@@ -108,7 +99,7 @@ class SimCar {
         
         // تحديث سرعة العرض
         const kmh = Math.round(speed * 10);
-        speedElement.textContent = `${kmh} km/h`;
+        if (speedElement) speedElement.textContent = `${kmh} km/h`;
         
         return kmh;
     }
@@ -180,7 +171,7 @@ class SimInterface {
         }
         
         // تحديث عدد اللاعبين
-        playerCountElement.textContent = `اللاعبين: ${this.model.cars.size}`;
+        if (playerCountElement) playerCountElement.textContent = `اللاعبين: ${this.model.cars.size}`;
     }
 
     initScene() {
@@ -704,13 +695,13 @@ class SimInterface {
         // تحديث عداد FPS
         frameCount++;
         if (time - lastFpsUpdate >= 1000) {
-            fpsCounterElement.textContent = `FPS: ${Math.round(frameCount * 1000 / (time - lastFpsUpdate))}`;
+            if (fpsCounterElement) fpsCounterElement.textContent = `FPS: ${Math.round(frameCount * 1000 / (time - lastFpsUpdate))}`;
             frameCount = 0;
             lastFpsUpdate = time;
         }
         
         // تحديث عدد اللاعبين
-        playerCountElement.textContent = `اللاعبين: ${this.model.cars.size}`;
+        if (playerCountElement) playerCountElement.textContent = `اللاعبين: ${this.model.cars.size}`;
         
         // تحديث التحكم
         this.updateControls();
@@ -729,42 +720,48 @@ class SimInterface {
 }
 
 // بدء اللعبة
-function startGame(isHost) {
+function startGame() {
     menuScreen.classList.remove('active');
     gameScreen.classList.add('active');
     
     loadingElement.style.display = 'flex';
     
-    // محاكاة اتصال Multisynq (يجب استبدالها بالاتصال الحقيقي)
-    setTimeout(() => {
-        const model = new SharedSimulation();
-        const view = new SimInterface(model);
-        
-        loadingElement.style.display = 'none';
-        
-        const loop = (time) => {
-            view.update(time);
-            requestAnimationFrame(loop);
-        };
-        requestAnimationFrame(loop);
-    }, 2000);
-    
-    // في التطبيق الحقيقي، سيتم استخدام:
-    /*
+    // الاتصال بخادم Multisynq باستخدام API Key المقدم
     Multisynq.Session.join({
         apiKey: "2EIkqLXgo51r7ZLU6lbnYPg0hMr7fnRHaAGiNlep1C",
-        name: isHost ? "host-session" : "join-session",
+        name: location.origin + location.pathname,
         password: "none",
         model: SharedSimulation,
         view: SimInterface,
         debug: ["writes"]
     }).then(app => {
+        appState.session = app;
+        appState.isConnected = true;
+        
         const view = app.view || app;
-        const loop = (time) => { view.update(time); requestAnimationFrame(loop); };
+        const loop = (time) => {
+            view.update(time);
+            requestAnimationFrame(loop);
+        };
         requestAnimationFrame(loop);
+        
         loadingElement.style.display = "none";
     }).catch(error => {
+        console.error("Connection error:", error);
         loadingElement.textContent = "خطأ في الاتصال: " + error.message;
+        
+        // Fallback إلى وضع اللعب الفردي في حالة فشل الاتصال
+        setTimeout(() => {
+            const model = new SharedSimulation();
+            const view = new SimInterface(model);
+            
+            loadingElement.style.display = 'none';
+            
+            const loop = (time) => {
+                view.update(time);
+                requestAnimationFrame(loop);
+            };
+            requestAnimationFrame(loop);
+        }, 3000);
     });
-    */
 }
