@@ -728,7 +728,7 @@ function startGame() {
     
     // الاتصال بخادم Multisynq باستخدام API Key المقدم
     Multisynq.Session.join({
-        apiKey: "2EIkqLXgo51r7ZLU6lbnYPg0hMr7fnRHaAGiNlep1C",
+        apiKey: "2UBOClrdgudLv5UWKuKYsZAzi50An384b6hUW2Cicg",
         name: location.origin + location.pathname,
         password: "none",
         model: SharedSimulation,
