@@ -752,7 +752,7 @@ function startGame(isHost) {
     // في التطبيق الحقيقي، سيتم استخدام:
     /*
     Multisynq.Session.join({
-        apiKey: "YOUR_API_KEY_HERE",
+        apiKey: "2EIkqLXgo51r7ZLU6lbnYPg0hMr7fnRHaAGiNlep1C",
         name: isHost ? "host-session" : "join-session",
         password: "none",
         model: SharedSimulation,
