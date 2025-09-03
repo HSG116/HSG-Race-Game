@@ -7,80 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="menu-screen" class="screen active">
-        <div class="menu-container">
-            <h1>سباق السيارات المتعدد</h1>
-            <div class="menu-content">
-                <div class="player-name">
-                    <input type="text" id="player-name-input" placeholder="أدخل اسمك" maxlength="15" value="اللاعب">
-                </div>
-                <div class="menu-buttons">
-                    <button id="join-game" class="menu-btn">الدخول إلى اللعبة</button>
-                    <button id="how-to-play" class="menu-btn">كيفية اللعب</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div id="how-to-play-screen" class="screen">
-        <div class="instructions-container">
-            <h2>كيفية اللعب</h2>
-            <div class="instructions-content">
-                <div class="instruction">
-                    <h3>التحكم باللوحة</h3>
-                    <p><span class="key">W</span> أو <span class="key">↑</span> للتقدم للأمام</p>
-                    <p><span class="key">S</span> أو <span class="key">↓</span> للتراجع للخلف</p>
-                    <p><span class="key">A</span> أو <span class="key">←</span> للانعطاف لليسار</p>
-                    <p><span class="key">D</span> أو <span class="key">→</span> للانعطاف لليمين</p>
-                    <p><span class="key">R</span> لإعادة تعيين السيارة</p>
-                </div>
-                <div class="instruction">
-                    <h3>التحكم باللمس</h3>
-                    <p>استخدم الأزرار في أسفل الشاشة للتحكم بسيارتك</p>
-                    <div class="touch-controls-demo">
-                        <button class="demo-btn">أمام</button>
-                        <button class="demo-btn">خلف</button>
-                        <button class="demo-btn">يسار</button>
-                        <button class="demo-btn">يمين</button>
-                    </div>
-                </div>
-            </div>
-            <button id="back-to-menu" class="menu-btn">العودة إلى القائمة</button>
+    <div class="controls">
+        <div class="left-controls">
+            <button id="btn-left">◀</button>
+            <button id="btn-right">▶</button>
         </div>
-    </div>
-
-    <div id="game-screen" class="screen">
-        <div id="game-container">
-            <div id="loading">
-                <div class="loading-spinner"></div>
-                <p>جاري تحميل اللعبة...</p>
-            </div>
-            <div id="hud">
-                <div id="player-info">
-                    <span id="player-name-display">اللاعب</span>
-                    <span id="speed">0 km/h</span>
-                </div>
-                <div id="game-stats">
-                    <span id="player-count">اللاعبين: 1</span>
-                    <span id="fps-counter">FPS: 0</span>
-                </div>
-            </div>
-            <div id="instructions">
-                <h3>تعليمات التحكم</h3>
-                <p>استخدم مفاتيح الأسهم أو WASD للتحرك</p>
-                <p>اضغط R لإعادة تعيين سيارتك</p>
-            </div>
-        </div>
-        
-        <div class="controls">
-            <div class="left-controls">
-                <button id="btn-left">يسار</button>
-                <button id="btn-right">يمين</button>
-            </div>
-            <div class="right-controls">
-                <button id="btn-fwd">أمام</button>
-                <button id="btn-bwd">خلف</button>
-            </div>
+        <div class="right-controls">
+            <button id="btn-fwd">▲</button>
+            <button id="btn-bwd">▼</button>
         </div>
     </div>
 
