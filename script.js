@@ -377,7 +377,7 @@ console.log("Joining Multisynq session...");
 
 Multisynq.Session.join({
     // هام: استبدل هذا المفتاح بمفتاح API الخاص بك من موقع multisynq.io
-    apiKey: "",
+    apiKey: "2bmCjaMrmGSYkcja6aBfn3oSV6MDQLZpzqr1m61eFN",
     
     // اسم الجلسة، استخدام الرابط يضمن أن اللاعبين في نفس الصفحة ينضمون لنفس الجلسة
     name: location.origin + location.pathname, 
